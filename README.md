@@ -45,39 +45,41 @@ Round 1: 7
 1.若Ap-1==Bq-1 则LCS(p,q)=LCS(p-1,q-1)+1;注：若Ap-1==Bp-1则一定属于最长公共子序列的一部分
 2.否则Ap-1!=Bq-1 则LCS(p,q)=max(LCS(p-1,q),LCS(p,q-1));注：若Ap-1!=Bp-1，则LCS(p,q)为两个子序列其中一个去掉最后一个元素后最大的公共子序列长度
 赋上java源码为：
-import java.util.Scanner;
-//最大公共子序列问题
-public class Main {
-	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		int t=sc.nextInt();
-		for (int i = 0; i < t; i++) {
-			int n = sc.nextInt();
-			int p = sc.nextInt();
-			int q = sc.nextInt();
-			int first[]=new int[p+1];
-			int second[]=new int[q+1];
-			for (int j = 0; j < first.length; j++) {
-				first[j]=sc.nextInt();
-			}
-			for (int j = 0; j < second.length; j++) {
-				second[j]=sc.nextInt();
-			}
-			
-			int visit[][]=new int[first.length+1][second.length+1];
-			for (int j = 1; j < first.length + 1 ; j++) {
-				for (int k = 1; k < second.length + 1; k++) {
-					if(first[j-1]==second[k-1]){
-						visit[j][k]=visit[j-1][k-1]+1;
-					}else if(visit[j-1][k]>visit[j][k-1]){
-						visit[j][k]=visit[j-1][k];
-					}else{
-						visit[j][k]=visit[j][k-1];
+	
+	import java.util.Scanner;
+	//最大公共子序列问题
+	public class Main {
+
+		public static void main(String[] args) {
+			Scanner sc=new Scanner(System.in);
+			int t=sc.nextInt();
+			for (int i = 0; i < t; i++) {
+				int n = sc.nextInt();
+				int p = sc.nextInt();
+				int q = sc.nextInt();
+				int first[]=new int[p+1];
+				int second[]=new int[q+1];
+				for (int j = 0; j < first.length; j++) {
+					first[j]=sc.nextInt();
+				}
+				for (int j = 0; j < second.length; j++) {
+					second[j]=sc.nextInt();
+				}
+
+				int visit[][]=new int[first.length+1][second.length+1];
+				for (int j = 1; j < first.length + 1 ; j++) {
+					for (int k = 1; k < second.length + 1; k++) {
+						if(first[j-1]==second[k-1]){
+							visit[j][k]=visit[j-1][k-1]+1;
+						}else if(visit[j-1][k]>visit[j][k-1]){
+							visit[j][k]=visit[j-1][k];
+						}else{
+							visit[j][k]=visit[j][k-1];
+						}
 					}
 				}
+				System.out.println("Round "+(i+1)+": "+visit[first.length][second.length]);
 			}
-			System.out.println("Round "+(i+1)+": "+visit[first.length][second.length]);
+			sc.close();
 		}
-		sc.close();
 	}
-}
